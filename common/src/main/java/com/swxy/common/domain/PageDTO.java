@@ -1,10 +1,10 @@
-package com.swxy.domain;
+package com.swxy.common.domain;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hmall.common.utils.BeanUtils;
-import com.hmall.common.utils.CollUtils;
-import com.hmall.common.utils.Convert;
+import com.swxy.common.utils.BeanUtils;
+import com.swxy.common.utils.CollUtils;
+import com.swxy.common.utils.Convert;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

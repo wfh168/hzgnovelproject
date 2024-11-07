@@ -1,4 +1,4 @@
-package com.swxy.config;
+package com.swxy.common.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

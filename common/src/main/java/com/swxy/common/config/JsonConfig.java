@@ -1,4 +1,4 @@
-package com.swxy.config;
+package com.swxy.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

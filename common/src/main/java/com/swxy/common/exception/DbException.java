@@ -1,4 +1,4 @@
-package com.swxy.exception;
+package com.swxy.common.exception;
 
 public class DbException extends CommonException{
 

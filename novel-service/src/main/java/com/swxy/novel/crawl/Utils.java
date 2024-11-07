@@ -1,4 +1,4 @@
-package com.swxy.crawl;
+package com.swxy.novel.crawl;
 
 
 import java.security.MessageDigest;

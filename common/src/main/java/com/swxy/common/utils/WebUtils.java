@@ -1,4 +1,4 @@
-package com.hmall.common.utils;
+package com.swxy.common.utils;
 
 
 import cn.hutool.core.collection.CollUtil;

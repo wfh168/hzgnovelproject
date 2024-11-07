@@ -1,4 +1,4 @@
-package com.swxy.novel.entity;
+package com.swxy.novel.entity.po;
 
 public class NovelsStart {
     private  String SearchUrl;

@@ -1,6 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</beans>
+<mapper namespace="com.swxy.novel.mapper.NovelMapper">
+    <resultMap id="NovelResultMap" type="com.swxy.novel.entity.po.Novel">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="status" column="status"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="introduction" column="introduction"/>
+        <result property="imagePath" column="image_path"/>
+    </resultMap>
+    <!-- 查询所有小说 -->
+    <select id="getAllNovels" resultType="com.swxy.novel.entity.po.Novel">
+        SELECT *
+        FROM novels
+    </select>
+
+    <!-- 根据小说名称搜索小说 -->
+    <select id="searchNovelsByTitle" resultType="com.swxy.novel.entity.po.Novel" resultMap="NovelResultMap">
+        SELECT id, title, author, status, update_time, introduction, image_path
+        FROM novels
+        WHERE title LIKE '%' || #{title} || '%'
+    </select>
+
+</mapper>

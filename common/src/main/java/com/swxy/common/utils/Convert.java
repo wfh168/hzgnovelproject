@@ -1,4 +1,4 @@
-package com.swxy.utils;
+package com.swxy.common.utils;
 
 /**
  * 对原对象进行计算，设置到目标对象中

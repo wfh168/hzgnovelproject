@@ -1,107 +1,72 @@
-package com.swxy.crawl;
+package com.swxy.novel.crawl;
 
-
-import com.swxy.entity.Chapter;
-import com.swxy.entity.Novel;
-import com.swxy.entity.NovelsStart;
+import com.swxy.novel.entity.po.Chapter;
+import com.swxy.novel.entity.po.Novel;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
+@Component
 public class NovelsCrawler {
-    private static final Logger logger = LoggerFactory.getLogger(NovelsCrawler.class);
 
-    public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("请输入小说名称: ");
-            String novelName = scanner.nextLine();
-            searchNovel(novelName);
+    private final SearchService searchService;
+    private final NovelDetailsService novelDetailsService;
+    private final FetchChapterService fetchChapterService;
+
+    // Constructor Injection (Best practice in Spring)
+    @Autowired
+    public NovelsCrawler(SearchService searchService, NovelDetailsService novelDetailsService, FetchChapterService fetchChapterService) {
+        this.searchService = searchService;
+        this.novelDetailsService = novelDetailsService;
+        this.fetchChapterService = fetchChapterService;
+    }
+
+    /**
+     * Search novels by name or author.
+     * @param novelName The name or author of the novel.
+     * @return A map with integer keys (e.g., novel ID) and string values (e.g., novel title or URL).
+     * @throws IOException If an error occurs during the search process.
+     */
+    public Map<Integer, String> searchNovels(String novelName) throws IOException {
+        try {
+            return searchService.search(novelName);
         } catch (IOException e) {
-            logger.error("发生错误: {}", e.getMessage());
+            throw new IOException("Failed to search novels for: " + novelName, e);
         }
     }
 
-    private static void searchNovel(String novelName) throws IOException {
-        NovelsStart novelsStart = new NovelsStart();
-        Document searchPage = Jsoup.connect(novelsStart.getSearchUrl())
-                .header("User-Agent", novelsStart.getUserAgent())
-                .data("searchkey", novelName)
-                .post();
-
-        Map<String, String> novelMap = new HashMap<>();
-        Elements novelLinks = searchPage.select("h4 > a");
-
-        for (Element link : novelLinks) {
-            novelMap.put(link.text(), link.absUrl("href"));
-        }
-
-        if (novelMap.isEmpty()) {
-            System.out.println("未找到相关小说。");
-            return;
-        }
-
-        displayNovels(novelMap);
-        selectNovel(novelMap);
-    }
-
-    private static void displayNovels(Map<String, String> novelMap) {
-        System.out.println("找到的小说：");
-        int index = 1;
-        for (Map.Entry<String, String> entry : novelMap.entrySet()) {
-            System.out.println(index++ + ". " + entry.getKey() + " : " + entry.getValue());
+    /**
+     * Fetch the details of a specific novel.
+     * @param novelUrl The URL of the novel.
+     * @param saveDir The directory where the novel details should be saved.
+     * @return The novel details.
+     * @throws IOException If an error occurs while fetching the details.
+     */
+    public Novel fetchNovelDetails(String novelUrl, String saveDir) throws IOException {
+        try {
+            return novelDetailsService.fetchDetails(novelUrl, saveDir);
+        } catch (IOException e) {
+            throw new IOException("Failed to fetch details for novel: " + novelUrl, e);
         }
     }
 
-    private static void selectNovel(Map<String, String> novelMap) throws IOException {
-        System.out.print("请输入小说编号: ");
-        Scanner scanner = new Scanner(System.in);
-        int selectedIndex = scanner.nextInt();
-        String novelUrl = (String) novelMap.values().toArray()[selectedIndex - 1];
-        if (novelUrl != null) {
-            fetchNovelDetails(novelUrl);
-        } else {
-            System.out.println("未找到该小说标题。");
+    /**
+     * Fetch all chapters of a specific novel.
+     * @param novelUrl The URL of the novel.
+     * @return A list of chapters for the novel.
+     * @throws IOException If an error occurs while fetching the chapters.
+     */
+    public List<Chapter> fetchNovelChapters(String novelUrl) throws IOException {
+        try {
+            Document novelPage = Jsoup.connect(novelUrl).get(); // Fetch the novel page
+            return fetchChapterService.fetchChapters(novelPage); // Fetch chapters from the page
+        } catch (IOException e) {
+            throw new IOException("Failed to fetch chapters for novel: " + novelUrl, e);
         }
-    }
-
-    private static void fetchNovelDetails(String novelUrl) throws IOException {
-        NovelsStart novelsStart = new NovelsStart();
-        Document novelPage = Jsoup.connect(novelUrl)
-                .header("User-Agent", novelsStart.getUserAgent())
-                .get();
-
-        Novel novel = new Novel(novelPage);
-        logger.info(novel.toString());
-
-        ImageDownloader.downloadImage(novelPage, novelsStart.getSaveDir());
-        fetchChapters(novelPage);
-    }
-
-    private static void fetchChapters(Document novelPage) {
-        Elements chapterLinks = novelPage.select("#newlist a");
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        for (Element chapterLink : chapterLinks) {
-            String chapterUrl = chapterLink.absUrl("href");
-            String chapterName = chapterLink.text();
-            executor.submit(() -> {
-                Chapter chapter = new Chapter(chapterUrl);
-                chapter.fetchContent();
-                logger.info("章节: {}", chapterName);
-                logger.info("章节内容: {}", chapter.getContent());
-                System.out.println("-------------------------------------------------");
-            });
-        }
-        executor.shutdown();
     }
 }
-

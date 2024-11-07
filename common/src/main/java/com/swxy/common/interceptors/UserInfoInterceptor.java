@@ -1,7 +1,8 @@
-package com.hmall.common.interceptors;
+package com.swxy.common.interceptors;
 
 import cn.hutool.core.util.StrUtil;
-import com.hmall.common.utils.UserContext;
+
+import com.swxy.common.utils.UserContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

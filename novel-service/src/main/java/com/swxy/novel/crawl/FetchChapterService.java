@@ -1,45 +1,109 @@
 package com.swxy.novel.crawl;
-import com.swxy.novel.entity.Chapter;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.swxy.novel.entity.po.Chapter;
+import com.swxy.novel.mapper.ChapterMapper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-public class ChapterService {
-    private static final Logger logger = LoggerFactory.getLogger(ChapterService.class);
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
 
-    public void fetchChapters(Document novelPage) {
+@Service
+public class FetchChapterService {
+    @Autowired
+    private ChapterMapper chapterMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(FetchChapterService.class);
+
+    // Method to check if a chapter already exists in the database
+    public boolean chapterExists(Long novelId, Long chapterId) {
+        QueryWrapper<Chapter> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("novel_id", novelId).eq("chapter_id", chapterId);
+        return chapterMapper.selectCount(queryWrapper) > 0;
+    }
+
+    // Method to fetch chapters concurrently
+    public List<Chapter> fetchChapters(Document novelPage) {
+        List<Chapter> chapters = new CopyOnWriteArrayList<>();
+        List<String> failedUrls = new CopyOnWriteArrayList<>();
         Elements chapterLinks = novelPage.select("#newlist a");
-        ExecutorService executor = Executors.newFixedThreadPool(4); // 创建线程池
+        int totalChapters = chapterLinks.size();
 
-        for (Element chapterLink : chapterLinks) {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        List<Callable<Void>> tasks = new ArrayList<>();
+
+        logger.info("总章节数: {}", totalChapters);
+
+        // Submit tasks for fetching chapters
+        for (int i = 0; i < totalChapters; i++) {
+            Element chapterLink = chapterLinks.get(i);
             String chapterUrl = chapterLink.absUrl("href");
             String chapterName = chapterLink.text();
 
-            executor.submit(() -> {
+            int finalI = i;
+            tasks.add(() -> {
                 try {
-                    Chapter chapter = new Chapter(chapterUrl);
-                    chapter.fetchContent(); // 假设 fetchContent 方法会处理内容的获取
-                    logger.info("章节: {}", chapterName);
-                    logger.info("章节内容: {}", chapter.getContent());
-                    System.out.println("章节: " + chapterName);
-                    System.out.println("章节内容: " + chapter.getContent());
-                    System.out.println("-------------------------------------------------");
+                    Chapter chapter = new Chapter();
+                    chapter.setTitle(chapterName);
+                    chapter.setChapterId((long) (finalI + 1));  // Set chapter order
+                    chapter.fetchContent(chapterUrl);  // Fetch content
+
+                    // Check if the content was successfully fetched
+                    if (chapter.getContent() != null && !chapter.getContent().isEmpty()) {
+                        logger.info("成功获取章节: {}", chapterName);
+                        chapters.add(chapter);
+                    } else {
+                        logger.warn("章节 '{}' 内容为空或未获取成功", chapterName);
+                        failedUrls.add(chapterUrl);
+                    }
                 } catch (Exception e) {
                     logger.error("获取章节 '{}' 内容时出错: {}", chapterName, e.getMessage());
+                    failedUrls.add(chapterUrl);
                 }
+                return null;
             });
         }
 
-        executor.shutdown();
+        // Execute all tasks
         try {
-            executor.awaitTermination(1, TimeUnit.MINUTES); // 等待所有任务完成
+            executor.invokeAll(tasks);
+            executor.shutdown();
+            if (!executor.awaitTermination(60, TimeUnit.MINUTES)) {
+                logger.error("线程池在指定时间内没有完成所有任务");
+                executor.shutdownNow();
+            }
         } catch (InterruptedException e) {
             logger.error("线程池被中断: {}", e.getMessage());
+            executor.shutdownNow();
         }
+
+        // Retry failed URLs if any
+        if (!failedUrls.isEmpty()) {
+            logger.info("重新尝试获取失败的章节内容...");
+            for (String failedUrl : failedUrls) {
+                try {
+                    Chapter retryChapter = new Chapter();
+                    retryChapter.fetchContent(failedUrl); // Retry fetching the chapter content
+                    if (retryChapter.getContent() != null && !retryChapter.getContent().isEmpty()) {
+                        chapters.add(retryChapter);
+                        logger.info("重新获取成功: {}", failedUrl);
+                    } else {
+                        logger.warn("重新获取章节 '{}' 内容仍然为空", failedUrl);
+                    }
+                } catch (Exception e) {
+                    logger.error("重新获取章节 '{}' 时失败: {}", failedUrl, e.getMessage());
+                }
+            }
+        }
+
+        logger.info("总共获取到 {} 个章节", chapters.size());
+        return chapters;
     }
 }

@@ -1,4 +1,4 @@
-package com.swxy.utils;
+package com.swxy.common.utils;
 
 import cn.hutool.core.bean.BeanUtil;
 

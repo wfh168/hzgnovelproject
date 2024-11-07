@@ -1,4 +1,4 @@
-package com.swxy.utils;
+package com.swxy.common.utils;
 
 public class UserContext {
     private static final ThreadLocal<Long> tl = new ThreadLocal<>();

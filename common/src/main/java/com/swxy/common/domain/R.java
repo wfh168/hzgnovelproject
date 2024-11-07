@@ -1,6 +1,6 @@
-package com.swxy.domain;
+package com.swxy.common.domain;
 
-import com.hmall.common.exception.CommonException;
+import com.swxy.common.exception.CommonException;
 import lombok.Data;
 
 
