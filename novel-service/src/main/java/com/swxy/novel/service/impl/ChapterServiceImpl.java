@@ -43,7 +43,8 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         for (Chapter chapter : chapters) {
             // 检查章节标题和内容是否为空
             if (chapter.getTitle() == null || chapter.getContent() == null) {
-                logger.warn("章节 '{}' 内容或标题为空，跳过插入", chapter.getTitle());
+                logger.warn("章节 '{}' 内容或标题为空,跳过插入", chapter.getTitle());
+                logger.warn("章节{}跳过插入", chapter.getChapterId());
                 continue; // 跳过这个章节
             }
             // 设置小说ID

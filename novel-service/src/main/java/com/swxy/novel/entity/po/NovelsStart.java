@@ -12,7 +12,7 @@ public class NovelsStart {
     private String saveDir;
 
     public String getSaveDir() {
-        return "D:\\javacode\\hzgnovel\\imgfile\\";
+        return "D:\\javacode\\hzgnovelproject\\imgfile\\";
     }
 
     public String getCookie() {
