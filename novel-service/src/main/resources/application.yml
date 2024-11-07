@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@192.168.214.129:1521:pdborcl
+    username: novel
+    password: 123456
+    driver-class-name: oracle.jdbc.OracleDriver
+logging:
+  level:
+    com.swxy: debug
+  pattern:
+    dateformat: HH:mm:ss
+
+knife4j:
+  enable: true
+  title: 小说 api
+  version: 1.0
+  description: 小说 API 接口文档
+  contact:
+    name: wfh
+    email: 2740461899@qq.com
+    url: http://example.com
+  group:
+    default:
+      group-name: default
+      api-rule: package
+      api-rule-resources:
+        - com.swxy.novelproject.controller
+server:
+  port: 8080
+mybatis-plus:
+  type-aliases-package: com.swxy.novelproject.entity
+  configuration:
+    jdbc-type-for-null: 'null'
+  global-config:
+    db-config:
+      id-type: auto
+  mapper-locations: "classpath*:/mapper/**/*.xml"
