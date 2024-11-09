@@ -1,6 +1,6 @@
 package com.swxy.novel.service;
 
-import com.swxy.novel.entity.po.Chapter;
+import com.swxy.novel.domain.po.Chapter;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.swxy.novel.crawl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.swxy.novel.entity.po.Chapter;
+import com.swxy.novel.domain.po.Chapter;
 import com.swxy.novel.mapper.ChapterMapper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

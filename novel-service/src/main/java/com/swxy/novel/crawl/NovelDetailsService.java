@@ -1,6 +1,6 @@
 package com.swxy.novel.crawl;
-import com.swxy.novel.entity.po.Novel;
-import com.swxy.novel.entity.po.NovelsStart;
+import com.swxy.novel.domain.po.Novel;
+import com.swxy.novel.domain.po.NovelsStart;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -26,11 +26,7 @@ public class NovelDetailsService {
         if (imagePath != null) {
             novel.setImagePath(imagePath);
         }
-
         logger.info(novel.toString());
-
-        // 处理章节等其他信息
-        ImageDownloader.downloadImage(novelPage, novelsStart.getSaveDir());
         return novel;
     }
 }

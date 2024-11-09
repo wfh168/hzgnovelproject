@@ -2,7 +2,7 @@ package com.swxy.novel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.swxy.novel.entity.po.Novel;
+import com.swxy.novel.domain.po.Novel;
 import com.swxy.novel.mapper.NovelMapper;
 import com.swxy.novel.service.NovelService;
 import org.slf4j.Logger;

@@ -59,6 +59,8 @@ public class ImageDownloader {
 
             // 如果文件不存在或哈希不同，则保存文件
             Files.write(Paths.get(savePath), imageBytes);
+            String cdn="https://cdn.jsdelivr.net/gh/wfh168/hzgnovelproject@master/";
+            savePath=cdn+savePath;
             logger.info("图片下载成功: {}", savePath);
             return savePath; // 返回保存路径
         } catch (MalformedURLException e) {

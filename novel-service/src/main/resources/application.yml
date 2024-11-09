@@ -3,10 +3,12 @@ server:
 spring:
   application:
     name: novel-service
+  profiles:
+    active: local
   datasource:
-    url: jdbc:oracle:thin:@192.168.214.129:1521/pdborcl  # 替换为你的数据库连接信息
-    username: novel                      # 替换为你的数据库用户名
-    password: 123456                       # 替换为你的数据库密码
+    url: jdbc:oracle:thin:@${hzg.db.host}:1521/${hzg.db.servicename}  # 替换为你的数据库连接信息
+    username: ${hzg.db.username}                      # 替换为你的数据库用户名
+    password: ${hzg.db.pwd}                       # 替换为你的数据库密码
     driver-class-name: oracle.jdbc.OracleDriver
 logging:
   level:
@@ -18,9 +20,9 @@ knife4j:
   openapi:
     title: 小说接口文档
     description: "小说接口文档"
-    email: zhanghuyi@itcast.cn
+    email: wu2740461899@163.com
     concat: wfh
-    url: https://www.itcast.cn
+    url: https://swxy.csuft.edu.cn/
     version: v1.0.0
     group:
       default:
@@ -29,7 +31,7 @@ knife4j:
         api-rule-resources:
           - com.swxy.novel.controller
 mybatis-plus:
-  type-aliases-package: com.swxy.novel.entity
+  type-aliases-package: com.swxy.novel.domain
   configuration:
     #mybatis-plus发送null给oracle是会报错，所以增加此参数
     jdbc-type-for-null: 'null'

@@ -1,4 +1,4 @@
-package com.swxy.novel.entity.po;
+package com.swxy.novel.domain.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

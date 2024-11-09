@@ -1,7 +1,7 @@
 package com.swxy.novel.controller;
 
 import com.swxy.common.exception.BadRequestException;
-import com.swxy.novel.entity.po.Chapter;
+import com.swxy.novel.domain.po.Chapter;
 import com.swxy.novel.service.ChapterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chapter")

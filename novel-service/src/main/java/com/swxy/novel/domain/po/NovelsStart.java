@@ -1,4 +1,4 @@
-package com.swxy.novel.entity.po;
+package com.swxy.novel.domain.po;
 
 public class NovelsStart {
     private  String SearchUrl;
@@ -12,7 +12,7 @@ public class NovelsStart {
     private String saveDir;
 
     public String getSaveDir() {
-        return "D:\\javacode\\hzgnovelproject\\imgfile\\";
+        return "imgfile/";
     }
 
     public String getCookie() {

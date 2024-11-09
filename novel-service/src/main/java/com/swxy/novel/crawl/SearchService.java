@@ -1,6 +1,6 @@
 package com.swxy.novel.crawl;
 
-import com.swxy.novel.entity.po.NovelsStart;
+import com.swxy.novel.domain.po.NovelsStart;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

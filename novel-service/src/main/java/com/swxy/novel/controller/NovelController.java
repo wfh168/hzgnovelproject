@@ -1,9 +1,9 @@
 package com.swxy.novel.controller;
 
 import com.swxy.novel.crawl.NovelsCrawler;
-import com.swxy.novel.entity.po.Chapter;
-import com.swxy.novel.entity.po.Novel;
-import com.swxy.novel.entity.po.NovelsStart;
+import com.swxy.novel.domain.po.Chapter;
+import com.swxy.novel.domain.po.Novel;
+import com.swxy.novel.domain.po.NovelsStart;
 import com.swxy.novel.service.ChapterService;
 import com.swxy.novel.service.NovelService;
 import io.swagger.annotations.Api;

@@ -1,7 +1,7 @@
 package com.swxy.novel.crawl;
 
-import com.swxy.novel.entity.po.Chapter;
-import com.swxy.novel.entity.po.Novel;
+import com.swxy.novel.domain.po.Chapter;
+import com.swxy.novel.domain.po.Novel;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
