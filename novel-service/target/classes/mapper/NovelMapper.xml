@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.swxy.novel.mapper.NovelMapper">
-    <resultMap id="NovelResultMap" type="com.swxy.novel.entity.po.Novel">
+    <resultMap id="NovelResultMap" type="com.swxy.novel.domain.po.Novel">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="author" column="author"/>
@@ -12,13 +12,13 @@
         <result property="imagePath" column="image_path"/>
     </resultMap>
     <!-- 查询所有小说 -->
-    <select id="getAllNovels" resultType="com.swxy.novel.entity.po.Novel">
+    <select id="getAllNovels" resultType="com.swxy.novel.domain.po.Novel">
         SELECT *
         FROM novels
     </select>
 
     <!-- 根据小说名称搜索小说 -->
-    <select id="searchNovelsByTitle" resultType="com.swxy.novel.entity.po.Novel" resultMap="NovelResultMap">
+    <select id="searchNovelsByTitle" resultType="com.swxy.novel.domain.po.Novel" resultMap="NovelResultMap">
         SELECT id, title, author, status, update_time, introduction, image_path
         FROM novels
         WHERE title LIKE '%' || #{title} || '%'
