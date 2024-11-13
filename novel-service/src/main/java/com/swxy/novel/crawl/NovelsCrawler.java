@@ -1,14 +1,10 @@
 package com.swxy.novel.crawl;
 
-import com.swxy.novel.domain.po.Chapter;
 import com.swxy.novel.domain.po.Novel;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -16,14 +12,12 @@ public class NovelsCrawler {
 
     private final SearchService searchService;
     private final NovelDetailsService novelDetailsService;
-    private final FetchChapterService fetchChapterService;
 
     // Constructor Injection (Best practice in Spring)
     @Autowired
-    public NovelsCrawler(SearchService searchService, NovelDetailsService novelDetailsService, FetchChapterService fetchChapterService) {
+    public NovelsCrawler(SearchService searchService, NovelDetailsService novelDetailsService) {
         this.searchService = searchService;
         this.novelDetailsService = novelDetailsService;
-        this.fetchChapterService = fetchChapterService;
     }
 
     /**
@@ -55,18 +49,5 @@ public class NovelsCrawler {
         }
     }
 
-    /**
-     * Fetch all chapters of a specific novel.
-     * @param novelUrl The URL of the novel.
-     * @return A list of chapters for the novel.
-     * @throws IOException If an error occurs while fetching the chapters.
-     */
-    public List<Chapter> fetchNovelChapters(String novelUrl) throws IOException {
-        try {
-            Document novelPage = Jsoup.connect(novelUrl).get(); // Fetch the novel page
-            return fetchChapterService.fetchChapters(novelPage); // Fetch chapters from the page
-        } catch (IOException e) {
-            throw new IOException("Failed to fetch chapters for novel: " + novelUrl, e);
-        }
-    }
+
 }

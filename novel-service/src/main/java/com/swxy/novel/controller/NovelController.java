@@ -1,10 +1,11 @@
 package com.swxy.novel.controller;
 
+import com.swxy.api.client.ChapterClient;
+import com.swxy.api.dto.ChapterDTO;
 import com.swxy.novel.crawl.NovelsCrawler;
-import com.swxy.novel.domain.po.Chapter;
+import com.swxy.novel.domain.dto.NovelDTO;
 import com.swxy.novel.domain.po.Novel;
 import com.swxy.novel.domain.po.NovelsStart;
-import com.swxy.novel.service.ChapterService;
 import com.swxy.novel.service.NovelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,13 +30,19 @@ public class NovelController {
     @Autowired
     private NovelService novelService;
     @Autowired
-    private ChapterService chapterService;
+    private ChapterClient chapterClient;
 
     @PostMapping("/insertSearch")
     @ApiOperation(value = "获取爬取的小说列表", notes = "根据小说名或者作者名获得小说列表")
     public Map<Integer, String> searchNovels(@RequestBody Map<String, String> request) throws IOException {
         String novelName = request.get("novelName");
         return novelsCrawler.searchNovels(novelName);
+    }
+
+    @GetMapping("/searchByName")
+    @ApiOperation(value = "根据小说名称查找小说", notes = "根据小说名称模糊查询所有匹配的小说")
+    public List<NovelDTO> getNovelsByTitle(@RequestParam("title") String title) {
+        return novelService.getNovelsByTitle(title);
     }
 
     @GetMapping("/list")
@@ -71,13 +78,13 @@ public class NovelController {
             novelService.insertNovelToDatabase(novel);
 
             // 获取章节
-            List<Chapter> chapters = novelsCrawler.fetchNovelChapters(url);
+            List<ChapterDTO> chapters = chapterClient.fetchChapters(url);
             if (chapters == null || chapters.isEmpty()) {
                 logger.error("获取章节时返回 null 或空列表");
                 return ResponseEntity.status(500).body("获取章节失败");
             } else {
                 logger.info("获取到 {} 个章节", chapters.size());
-                chapterService.insertChaptersToDatabase(chapters, novel.getId());
+                chapterClient.insertChapters(chapters, novel.getId());
             }
 
             return ResponseEntity.ok("小说和章节详情成功插入数据库");

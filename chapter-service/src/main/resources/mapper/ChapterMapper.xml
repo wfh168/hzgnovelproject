@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.swxy.chapter.mapper.ChapterMapper">
+
+
+    <insert id="insertChapter" parameterType="com.swxy.chapter.domain.dto.ChapterDTO">
+        INSERT INTO chapters (chapter_id, title, content, novel_id)
+        VALUES (#{chapterId}, #{title}, #{content}, #{novelId})
+    </insert>
+
+</mapper>

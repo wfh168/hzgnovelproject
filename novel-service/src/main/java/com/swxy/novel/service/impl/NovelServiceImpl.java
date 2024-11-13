@@ -2,6 +2,7 @@ package com.swxy.novel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.swxy.novel.domain.dto.NovelDTO;
 import com.swxy.novel.domain.po.Novel;
 import com.swxy.novel.mapper.NovelMapper;
 import com.swxy.novel.service.NovelService;
@@ -12,6 +13,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 小说服务实现类
@@ -71,7 +73,7 @@ public class NovelServiceImpl extends ServiceImpl<NovelMapper, Novel> implements
      */
     @Override
     public List<Novel> getAllNovels() {
-        return novelMapper.getAllNovels();
+        return novelMapper.selectList(null);
     }
 
     /**
@@ -92,5 +94,28 @@ public class NovelServiceImpl extends ServiceImpl<NovelMapper, Novel> implements
 
         List<Novel> novels = novelMapper.selectList(queryWrapper);
         return novels;
+    }
+
+    @Override
+    public List<NovelDTO> getNovelsByTitle(String title) {
+        QueryWrapper<Novel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title", title); // 使用 like 模糊匹配小说名称
+
+        List<Novel> novels = novelMapper.selectList(queryWrapper);
+        return novels.stream()
+                .map(novel -> convertToDTO(novel))
+                .collect(Collectors.toList());
+    }
+    // 将 Novel 转换为 NovelDTO
+    private NovelDTO convertToDTO(Novel novel) {
+        NovelDTO novelDTO = new NovelDTO();
+        novelDTO.setId(novel.getId());
+        novelDTO.setTitle(novel.getTitle());
+        novelDTO.setAuthor(novel.getAuthor());
+        novelDTO.setStatus(novel.getStatus());
+        novelDTO.setUpdateTime(novel.getUpdateTime());
+        novelDTO.setIntroduction(novel.getIntroduction());
+        novelDTO.setImagePath(novel.getImagePath());
+        return novelDTO;
     }
 }

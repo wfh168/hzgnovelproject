@@ -1,0 +1,6 @@
+hzg:
+  db:
+    host: 47.112.169.238 # 主机地址
+    username: chapters  #用户名
+    pwd: 123456 #密码
+    servicename: XE

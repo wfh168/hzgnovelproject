@@ -1,0 +1,5 @@
+hzg:
+  db:
+    host: oracle # 主机地址
+    username: novel  #用户名
+    pwd: 123456 #密码

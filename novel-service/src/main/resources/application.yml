@@ -36,5 +36,7 @@ mybatis-plus:
     #mybatis-plus发送null给oracle是会报错，所以增加此参数
     jdbc-type-for-null: 'null'
   mapper-locations: "classpath*:/mapper/**/*.xml"
-
+feign:
+  okhttp:
+    enabled: true # 开启OKHttp功能
 

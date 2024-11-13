@@ -1,5 +1,6 @@
 package com.swxy.novel.crawl;
 
+import com.swxy.novel.utils.Utils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static com.swxy.novel.crawl.Utils.getMD5Hash;
+import static com.swxy.novel.utils.Utils.getMD5Hash;
 
 public class ImageDownloader {
     private static final Logger logger = LoggerFactory.getLogger(ImageDownloader.class);

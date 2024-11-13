@@ -1,10 +1,12 @@
 package com.swxy.novel;
+import com.swxy.api.config.DefaultFeignConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.env.ConfigurableEnvironment;
-
+@EnableFeignClients(basePackages = "com.swxy.api.client",defaultConfiguration = DefaultFeignConfig.class )
 @Slf4j
 @SpringBootApplication
 @MapperScan("com.swxy.novel.mapper")
