@@ -1,0 +1,6 @@
+com\swxy\api\dto\NovelDTO.class
+com\swxy\api\client\ChapterClient.class
+com\swxy\api\dto\ChapterDTO$ChapterFetchException.class
+com\swxy\api\dto\ChapterDTO.class
+com\swxy\api\config\DefaultFeignConfig.class
+com\swxy\api\client\NovelClient.class

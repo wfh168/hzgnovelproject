@@ -1,6 +1,7 @@
 package com.swxy.novel.crawl;
 
 import com.swxy.novel.domain.po.Novel;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,8 @@ public class NovelsCrawler {
             return searchService.search(novelName);
         } catch (IOException e) {
             throw new IOException("Failed to search novels for: " + novelName, e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -48,6 +51,5 @@ public class NovelsCrawler {
             throw new IOException("Failed to fetch details for novel: " + novelUrl, e);
         }
     }
-
 
 }

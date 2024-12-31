@@ -90,7 +90,7 @@ public class NovelServiceImpl extends ServiceImpl<NovelMapper, Novel> implements
         QueryWrapper<Novel> queryWrapper = new QueryWrapper<>();
 
         // 使用 LIKE 语法进行模糊查询
-        queryWrapper.apply("title LIKE '%' || {0} || '%'", title);
+        queryWrapper.apply("title LIKE CONCAT('%', {0}, '%')", title);
 
         List<Novel> novels = novelMapper.selectList(queryWrapper);
         return novels;
@@ -106,6 +106,16 @@ public class NovelServiceImpl extends ServiceImpl<NovelMapper, Novel> implements
                 .map(novel -> convertToDTO(novel))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long getNovelIdByName(String title) {
+        // 根据小说名称查找小说ID
+        QueryWrapper<Novel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("title", title); // 根据小说标题查找
+        Novel novel = getOne(queryWrapper); // 获取第一条匹配的记录
+        return novel.getId();
+    }
+
     // 将 Novel 转换为 NovelDTO
     private NovelDTO convertToDTO(Novel novel) {
         NovelDTO novelDTO = new NovelDTO();
@@ -116,6 +126,8 @@ public class NovelServiceImpl extends ServiceImpl<NovelMapper, Novel> implements
         novelDTO.setUpdateTime(novel.getUpdateTime());
         novelDTO.setIntroduction(novel.getIntroduction());
         novelDTO.setImagePath(novel.getImagePath());
+        novelDTO.setClassify(novel.getClassify());
+        novelDTO.setRecommendation(novel.getRecommendation());
         return novelDTO;
     }
 }

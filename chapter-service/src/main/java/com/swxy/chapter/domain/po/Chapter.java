@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Data
-@ApiModel(description = "章节信息实体类")
+@ApiModel(description = "小说信息实体类")
 @TableName("chapters")
 public class Chapter {
 
@@ -26,7 +26,7 @@ public class Chapter {
     private Long novelId;
 
     @ApiModelProperty(value = "章节标题", required = true)
-    private String title;
+    private String chapterTitle;
 
     @ApiModelProperty(value = "章节内容", required = true)
     private String content;
@@ -44,7 +44,7 @@ public class Chapter {
     public void fetchContent(String url) {
         try {
             Document chapterPage = Jsoup.connect(url).get(); // Fetch the chapter page
-            Elements paragraphs = chapterPage.select("#booktxt p"); // Select paragraphs in the content area
+            Elements paragraphs = chapterPage.select("#chaptercontent"); // Select paragraphs in the content area
             StringBuilder chapterContent = new StringBuilder();
             paragraphs.forEach(paragraph -> chapterContent.append(paragraph.outerHtml()));
 

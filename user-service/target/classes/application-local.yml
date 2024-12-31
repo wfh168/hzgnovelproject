@@ -1,0 +1,6 @@
+hzg:
+  db:
+    host: 192.168.214.129 # 主机地址
+    username: users  #用户名
+    pwd: 123456 #密码
+    servicename: pdborcl

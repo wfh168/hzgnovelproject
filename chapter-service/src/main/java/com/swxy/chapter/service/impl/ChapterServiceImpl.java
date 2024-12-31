@@ -43,16 +43,17 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
     public void insertChaptersToDatabase(List<ChapterDTO> chapters, Long novelId) {
         for (ChapterDTO chapterDTO : chapters) {
             // 检查章节标题和内容是否为空
-            if (chapterDTO.getTitle() == null || chapterDTO.getContent() == null) {
-                logger.warn("章节 '{}' 内容或标题为空,跳过插入", chapterDTO.getTitle());
+            if (chapterDTO.getChapterTitle() == null || chapterDTO.getContent() == null) {
+                logger.warn("章节 '{}' 内容或标题为空,跳过插入", chapterDTO.getChapterTitle());
                 logger.warn("章节{}跳过插入", chapterDTO.getChapterId());
                 continue; // 跳过这个章节
             }
             // 设置小说ID
             chapterDTO.setNovelId(novelId);
+            System.out.println(novelId);
             // 插入章节
             chapterMapper.insertChapter(chapterDTO);
-            System.out.println("插入成功: " + chapterDTO.getTitle());
+            System.out.println("插入成功: " + chapterDTO.getChapterTitle());
         }
     }
 
@@ -100,7 +101,7 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         // 查询并返回章节标题
         List<Chapter> chapters = chapterMapper.selectList(queryWrapper);
         return chapters.stream()
-                .map(Chapter::getTitle)
+                .map(Chapter::getChapterTitle)
                 .collect(Collectors.toList());
     }
 

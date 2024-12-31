@@ -1,15 +1,22 @@
 server:
   port: 8083
 spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.214.129:8848
   application:
     name: chapter-service
   profiles:
     active: local
   datasource:
-    url: jdbc:oracle:thin:@${hzg.db.host}:1521:${hzg.db.servicename}  # 替换为你的数据库连接信息
-    username: ${hzg.db.username}                      # 替换为你的数据库用户名
-    password: ${hzg.db.pwd}                       # 替换为你的数据库密码
-    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:mysql://${hzg.db.host}:3306/${hzg.db.servicename}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${hzg.db.username}
+    password: ${hzg.db.pwd}
+  servlet:
+    multipart:
+      max-file-size: 30MB
 logging:
   level:
     com.swxy: debug
@@ -32,9 +39,6 @@ knife4j:
           - com.swxy.chapter.controller
 mybatis-plus:
   type-aliases-package: com.swxy.chapter.domain
-  configuration:
-    #mybatis-plus发送null给oracle是会报错，所以增加此参数
-    jdbc-type-for-null: 'null'
   mapper-locations: "classpath*:/mapper/**/*.xml"
 feign:
   okhttp:

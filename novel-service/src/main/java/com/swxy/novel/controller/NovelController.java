@@ -76,7 +76,6 @@ public class NovelController {
             }
 
             novelService.insertNovelToDatabase(novel);
-
             // 获取章节
             List<ChapterDTO> chapters = chapterClient.fetchChapters(url);
             if (chapters == null || chapters.isEmpty()) {
@@ -84,7 +83,12 @@ public class NovelController {
                 return ResponseEntity.status(500).body("获取章节失败");
             } else {
                 logger.info("获取到 {} 个章节", chapters.size());
-                chapterClient.insertChapters(chapters, novel.getId());
+                if (novel.getId() == null) {
+                    Long novelId = novelService.getNovelIdByName(novel.getTitle());
+                    chapterClient.insertChapters(chapters, novelId);
+                }else{
+                    chapterClient.insertChapters(chapters, novel.getId());
+                }
             }
 
             return ResponseEntity.ok("小说和章节详情成功插入数据库");

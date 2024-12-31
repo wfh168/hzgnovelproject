@@ -38,7 +38,7 @@
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.5.3</mybatis-plus.version>
         <hutool.version>5.8.11</hutool.version>
-        <oracle.version>21.9.0.0</oracle.version>
+        <mysql.version>8.0.23</mysql.version>
     </properties>
 
     <dependencyManagement>
@@ -61,9 +61,9 @@
             </dependency>
             <!-- 数据库驱动包管理 -->
             <dependency>
-                <groupId>com.oracle.database.jdbc</groupId>
-                <artifactId>ojdbc8</artifactId>
-                <version>${oracle.version}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
             <!-- mybatis plus 管理 -->
             <dependency>

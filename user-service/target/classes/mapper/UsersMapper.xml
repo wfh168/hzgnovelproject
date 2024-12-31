@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swxy.user.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.swxy.user.domain.Users">
+    <!--@mbg.generated-->
+    <!--@Table USERS-->
+    <id column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="AVATAR_URL" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="BIRTHDAY" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="REGISTRATION_TIME" jdbcType="TIMESTAMP" property="registrationTime" />
+    <result column="FAILED_LOGIN_ATTEMPTS" jdbcType="DECIMAL" property="failedLoginAttempts" />
+    <result column="LOCK_TIME" jdbcType="TIMESTAMP" property="lockTime" />
+    <result column="IS_VERIFIED" jdbcType="CHAR" property="isVerified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    USER_ID, USERNAME, EMAIL, "PASSWORD", PHONE, NICKNAME, AVATAR_URL, GENDER, BIRTHDAY, 
+    "STATUS", LAST_LOGIN_TIME, REGISTRATION_TIME, FAILED_LOGIN_ATTEMPTS, LOCK_TIME, IS_VERIFIED
+  </sql>
+</mapper>

@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "小说信息实体类")
 public class NovelDTO {
     @ApiModelProperty(value= "主键，自增的小说ID")
-    @TableId(type = IdType.AUTO)
     private Long id;
     @ApiModelProperty(value= "小说标题",required = true)
     private String title;
@@ -28,4 +27,9 @@ public class NovelDTO {
     private String introduction;
     @ApiModelProperty(value= "小说封面图片路径",required = true)
     private String imagePath;
+    @ApiModelProperty(value = "小说分类",required = true)
+    private String classify;
+    @ApiModelProperty(value = "小说推荐默认为N")
+    private String recommendation;
+
 }

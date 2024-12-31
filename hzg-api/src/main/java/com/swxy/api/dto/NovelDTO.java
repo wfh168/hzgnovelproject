@@ -24,4 +24,8 @@ public class NovelDTO {
     private String introduction;
     @ApiModelProperty(value= "小说封面图片路径",required = true)
     private String imagePath;
+    @ApiModelProperty(value = "小说分类",required = true)
+    private String classify;
+    @ApiModelProperty(value = "小说推荐默认为N")
+    private String recommendation;
 }

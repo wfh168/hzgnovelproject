@@ -1,4 +1,6 @@
 package com.swxy.api.dto;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,22 +15,32 @@ import java.util.Date;
 @ApiModel(description = "小说信息实体类")
 public class ChapterDTO {
     @ApiModelProperty(value = "主键，自增的章节ID")
+    @TableId(type = IdType.AUTO)
     private Long id;
+
     @ApiModelProperty(value = "指向所属小说的ID", required = true)
     private Long novelId;
+
     @ApiModelProperty(value = "章节标题", required = true)
-    private String title;
+    private String chapterTitle;
+
     @ApiModelProperty(value = "章节内容", required = true)
     private String content;
+
     @ApiModelProperty(value = "章节最后更新时间", required = true)
     private Date updateTime;
+
     @ApiModelProperty(value = "小说章节id", required = true)
     private Long chapterId;
 
+    /**
+     * Fetches the content of a chapter from the provided URL.
+     * @param url The URL of the chapter to fetch.
+     */
     public void fetchContent(String url) {
         try {
             Document chapterPage = Jsoup.connect(url).get(); // Fetch the chapter page
-            Elements paragraphs = chapterPage.select("#booktxt p"); // Select paragraphs in the content area
+            Elements paragraphs = chapterPage.select("#chaptercontent"); // Select paragraphs in the content area
             StringBuilder chapterContent = new StringBuilder();
             paragraphs.forEach(paragraph -> chapterContent.append(paragraph.outerHtml()));
 
@@ -38,7 +50,7 @@ public class ChapterDTO {
             // Set update time to the current time when content is fetched
             this.updateTime = new Date();
         } catch (IOException e) {
-            throw new ChapterDTO.ChapterFetchException("Failed to fetch chapter content from URL: " + url, e);
+            throw new ChapterFetchException("Failed to fetch chapter content from URL: " + url, e);
         }
     }
 

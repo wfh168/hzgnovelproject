@@ -1,5 +1,8 @@
 package com.swxy.novel.domain.po;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NovelsStart {
     private  String SearchUrl;
     private String Accept;
@@ -8,15 +11,29 @@ public class NovelsStart {
     private String CacheControl;
     private String Connection;
     private String UserAgent;
-    private String Cookie;
+    private Map<String,String> Cookies;
     private String saveDir;
 
     public String getSaveDir() {
         return "imgfile/";
     }
 
-    public String getCookie() {
-        return "Hm_lvt_0f20b8c5b0d2f108de80ac8128e0c587=1730009494; HMACCOUNT=2C07C3A61ED49149; hm=90f6f80988731c56a90452d2e7644539; Hm_lpvt_0f20b8c5b0d2f108de80ac8128e0c587=1730019880";
+    public Map<String, String> getCookies() {
+        // Cookies 字符串
+        String cookieStr = "Hm_lvt_985c57aa6304c183e46daae6878b243b=1735279209; HMACCOUNT=2C07C3A61ED49149; getsite=bq02.cc; hm=0580c11e2ccece9deedc1d5f9ab9ada2; hmt=1735279212; Hm_lpvt_985c57aa6304c183e46daae6878b243b=1735279264";
+
+        // 创建一个 Map 来存储 cookies
+        Map<String, String> cookies = new HashMap<>();
+
+        // 分割 cookies 字符串并放入 Map 中
+        String[] cookiePairs = cookieStr.split("; ");
+        for (String cookiePair : cookiePairs) {
+            String[] keyValue = cookiePair.split("=");
+            if (keyValue.length == 2) {
+                cookies.put(keyValue[0], keyValue[1]);
+            }
+        }
+        return cookies;
     }
 
     public String getAccept() {
@@ -37,12 +54,10 @@ public class NovelsStart {
 
 
     public String getUserAgent() {
-        return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0";
+        return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
     }
 
     public String getSearchUrl() {
-        return "https://www.biqgg.com/search/";
+        return "https://www.bigee.cc/user/search.html?q=";
     }
-
-
 }

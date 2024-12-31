@@ -19,7 +19,7 @@ public class ImageDownloader {
     private static final Logger logger = LoggerFactory.getLogger(ImageDownloader.class);
 
     public static String downloadImage(Document novelPage, String saveDir) {
-        Element imgElement = novelPage.select("div:nth-child(1) > img").first();
+        Element imgElement = novelPage.select("body > div.book > div.info > div.cover > img").first();
         if (imgElement != null) {
             String imgUrl = imgElement.absUrl("src");
             String uniqueFileName = getMD5Hash(imgUrl.getBytes()) + ".jpg";
@@ -60,8 +60,6 @@ public class ImageDownloader {
 
             // 如果文件不存在或哈希不同，则保存文件
             Files.write(Paths.get(savePath), imageBytes);
-            String cdn="https://cdn.jsdelivr.net/gh/wfh168/hzgnovelproject@master/";
-            savePath=cdn+savePath;
             logger.info("图片下载成功: {}", savePath);
             return savePath; // 返回保存路径
         } catch (MalformedURLException e) {

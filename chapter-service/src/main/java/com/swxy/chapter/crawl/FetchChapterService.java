@@ -35,17 +35,53 @@ public class FetchChapterService {
     public List<ChapterDTO> fetchChapters(Document novelPage) {
         List<ChapterDTO> chapters = new CopyOnWriteArrayList<>();
         List<String> failedUrls = new CopyOnWriteArrayList<>();
-        Elements chapterLinks = novelPage.select("#newlist a");
-        int totalChapters = chapterLinks.size();
+        // 获取两个章节链接
+        Elements chapterLinks = novelPage.select("body > div.listmain > dl > dd > a");
+        Elements chapterLinks1 = novelPage.select("body > div.listmain > dl > span > dd > a");
 
+        // 1. 删除 chapterLinks 中包含 javascript:dd_show() 的链接
+        List<Element> validChapterLinks = new ArrayList<>();
+        for (Element link : chapterLinks) {
+            if (!link.attr("href").startsWith("javascript:dd_show()")) {
+                validChapterLinks.add(link);  // 只保留有效链接
+            }
+        }
+
+        // 2. 获取 chapterLinks 前10个元素
+        List<Element> firstTenLinks = new ArrayList<>();
+        int limit = Math.min(10, validChapterLinks.size());  // 处理少于10个的情况
+        for (int i = 0; i < limit; i++) {
+            firstTenLinks.add(validChapterLinks.get(i));
+        }
+
+        // 3. 获取 chapterLinks 后面的部分
+        List<Element> remainingLinks = new ArrayList<>();
+        for (int i = 10; i < validChapterLinks.size(); i++) {
+            remainingLinks.add(validChapterLinks.get(i));
+        }
+
+        // 4. 将 chapterLinks1 的链接添加到最终列表
+        List<Element> finalLinksList = new ArrayList<>();
+        finalLinksList.addAll(firstTenLinks);  // 添加前10个有效链接
+        finalLinksList.addAll(chapterLinks1);  // 添加 chapterLinks1 中的链接
+        finalLinksList.addAll(remainingLinks);  // 添加剩余的有效链接到末尾
+
+        // 将结果存储为 Elements 类型
+        Elements finalLinks = new Elements(finalLinksList);
+        System.out.println(finalLinks.size());
+        int totalChapters = finalLinks.size();
+        logger.info("总章节数: {}", totalChapters);
+        if (totalChapters > 500) {
+            totalChapters = 300;
+            logger.info("为了节省空间总章节数大于500插入{}条", totalChapters);
+        }
         ExecutorService executor = Executors.newFixedThreadPool(4);
         List<Callable<Void>> tasks = new ArrayList<>();
-
-        logger.info("总章节数: {}", totalChapters);
+        // Submit tasks for fetching chapters
 
         // Submit tasks for fetching chapters
         for (int i = 0; i < totalChapters; i++) {
-            Element chapterLink = chapterLinks.get(i);
+            Element chapterLink = finalLinks.get(i);
             String chapterUrl = chapterLink.absUrl("href");
             String chapterName = chapterLink.text();
 
@@ -53,7 +89,7 @@ public class FetchChapterService {
             tasks.add(() -> {
                 try {
                     ChapterDTO chapterDTO = new ChapterDTO();
-                    chapterDTO.setTitle(chapterName);
+                    chapterDTO.setChapterTitle(chapterName);
                     chapterDTO.setChapterId((long) (finalI + 1));  // Set chapter order
                     chapterDTO.fetchContent(chapterUrl);  // Fetch content
 

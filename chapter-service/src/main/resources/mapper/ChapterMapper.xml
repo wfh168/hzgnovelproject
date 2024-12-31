@@ -5,8 +5,8 @@
 
 
     <insert id="insertChapter" parameterType="com.swxy.chapter.domain.dto.ChapterDTO">
-        INSERT INTO chapters (chapter_id, title, content, novel_id)
-        VALUES (#{chapterId}, #{title}, #{content}, #{novelId})
+        INSERT INTO chapters (chapter_id, chapter_title, content, novel_id)
+        VALUES (#{chapterId}, #{chapterTitle}, #{content}, #{novelId})
     </insert>
 
 </mapper>

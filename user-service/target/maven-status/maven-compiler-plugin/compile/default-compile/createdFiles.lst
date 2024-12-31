@@ -1,0 +1,6 @@
+com\swxy\user\controller\UsersController.class
+com\swxy\user\mapper\UsersMapper.class
+com\swxy\user\UserApplication.class
+com\swxy\user\service\impl\UsersServiceImpl.class
+com\swxy\user\service\UsersService.class
+com\swxy\user\domain\Users.class

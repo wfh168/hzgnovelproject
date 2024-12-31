@@ -1,0 +1,61 @@
+14:11:27:739  INFO 30572 --- [main] com.swxy.novel.NovelApplication          : The following 1 profile is active: "local"
+14:11:28:323  INFO 30572 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=9cd53a2d-2396-3fac-a453-f9e5a17f87f6
+14:11:28:629  INFO 30572 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+14:11:28:636  INFO 30572 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+14:11:28:637  INFO 30572 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.69]
+14:11:28:727  INFO 30572 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+14:11:28:728  INFO 30572 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 968 ms
+14:11:29:108  INFO 30572 --- [main] o.s.c.openfeign.FeignClientFactoryBean   : For 'chapter-service' URL not provided. Will try picking an instance via load-balancing.
+14:11:29:672  INFO 30572 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2ControllerWebMvc#getDocumentation(String, HttpServletRequest)]
+14:11:29:918  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [RpcClientFactory] create a new rpc client of fe5af024-0031-41b6-9641-4790999e94f6
+14:11:29:918  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] RpcClient init label, labels = {module=naming, source=sdk}
+14:11:29:919  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+14:11:29:920  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+14:11:29:920  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+14:11:29:920  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Try to connect to server on start up, server: {serverIp = '192.168.214.129', server main port = 8848}
+14:11:30:039  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Success to connect to server [192.168.214.129:8848] on start up, connectionId = 1735625490184_192.168.214.1_61640
+14:11:30:039  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+14:11:30:039  INFO 30572 --- [com.alibaba.nacos.client.remote.worker] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Notify connected event to listeners.
+14:11:30:039  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$484/0x00000008010ec0b8
+14:11:30:292  WARN 30572 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8081 is already in use
+14:11:30:788  INFO 30572 --- [nacos-grpc-client-executor-5] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Receive server push request, request = NotifySubscriberRequest, requestId = 1
+14:11:30:790  INFO 30572 --- [nacos-grpc-client-executor-5] com.alibaba.nacos.common.remote.client   : [fe5af024-0031-41b6-9641-4790999e94f6] Ack server push request, request = NotifySubscriberRequest, requestId = 1
+14:11:30:908  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : Shutdown rpc client, set status to shutdown
+14:11:30:908  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@f391e52[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+14:11:30:908  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : Close current connection 1735625490184_192.168.214.1_61640
+14:11:30:912  INFO 30572 --- [main] c.a.n.c.remote.client.grpc.GrpcClient    : Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@ecfff32[Running, pool size = 6, active threads = 0, queued tasks = 0, completed tasks = 6]
+14:11:30:913  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [RpcClientFactory] create a new rpc client of aa3b39b9-850f-428f-814b-94efe5a7f1da
+14:11:30:913  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] RpcClient init label, labels = {module=naming, source=sdk}
+14:11:30:913  INFO 30572 --- [grpc-nio-worker-ELG-1-4] c.a.n.s.i.g.i.AbstractClientStream       : Received trailers on closed stream:
+ Metadata()
+ {2}
+14:11:30:913  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+14:11:30:913  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+14:11:30:913  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+14:11:30:914  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Try to connect to server on start up, server: {serverIp = '192.168.214.129', server main port = 8848}
+14:11:31:036  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Success to connect to server [192.168.214.129:8848] on start up, connectionId = 1735625491179_192.168.214.1_61643
+14:11:31:036  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+14:11:31:036  INFO 30572 --- [main] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$484/0x00000008010ec0b8
+14:11:31:036  INFO 30572 --- [com.alibaba.nacos.client.remote.worker] com.alibaba.nacos.common.remote.client   : [aa3b39b9-850f-428f-814b-94efe5a7f1da] Notify connected event to listeners.
+14:11:31:049  INFO 30572 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+14:11:31:062  INFO 30572 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+14:11:31:081 ERROR 30572 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8081 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8081 or configure this application to listen on another port.
+
+14:11:31:083  WARN 30572 --- [Thread-5] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Start destroying Publisher
+14:11:31:083  WARN 30572 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Start destroying common HttpClient
+14:11:31:083  WARN 30572 --- [Thread-5] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Destruction of the end
+14:11:31:084  WARN 30572 --- [Thread-1] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Destruction of the end
